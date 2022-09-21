@@ -12,9 +12,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc
-@Import(swaggerConfig.class)
+@Import({swaggerConfig.class})
 @ComponentScan({"com.withx.controller"})
-@PropertySource("classpath:globals.properties")
+@PropertySource("classpath:swagger.properties")
 public class ServeletConfig implements WebMvcConfigurer {
 
     @Override
