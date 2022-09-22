@@ -38,7 +38,7 @@ public class BookServiceImpl implements BookService {
 
     public BookVO findById(Integer id) {
         System.out.println("book service findById ...");
-
+        /*
         if(id == 1){
             throw new BusinessException(Code.BUSINESS_ERR,"접근이 제한된 ID입니다 !");
         }
@@ -48,6 +48,7 @@ public class BookServiceImpl implements BookService {
         }catch (Exception e){
             throw new SystemException(Code.SYSTEM_TIMEOUT_ERR,"시스템 장애, 운영팀에 문의하세요!",e);
         }
+        */
         return bookDao.findById(id);
     }
 }

@@ -37,9 +37,12 @@ public class BookController {
     }
 
     @GetMapping
-    public List<BookVO> findAll() {
+    public Result findAll() {
         System.out.println("book controller findAll ...");
-        return bookService.findAll();
+        List<BookVO> bookList = bookService.findAll();
+        String code = bookList != null ? Code.GET_OK : Code.GET_ERR;
+        String msg = bookList != null ? "" : "검색된 데이터가 없습니다！";
+        return new Result(code,bookList,msg);
     }
 
     @GetMapping("/{id}")
