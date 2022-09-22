@@ -15,25 +15,25 @@ public class BookController {
     private BookService bookService;
 
     @PostMapping
-    public String save(@RequestBody BookVO book) {
+    public Result save(@RequestBody BookVO book) {
         System.out.println("book controller called.");
-        bookService.save(book);
 
-        return "{'code':'001','stat':'save ok'}";
+        boolean flag = bookService.save(book);
+        return new Result(flag ? Code.SAVE_OK:Code.SAVE_ERR,flag);
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable Integer id) {
+    public Result delete(@PathVariable Integer id) {
         System.out.println("book controller delete ...");
-        bookService.delete(id);
-        return "{'code':'001','stat':'delete ok'}";
+        boolean flag = bookService.delete(id);
+        return new Result(flag ? Code.DELETE_OK:Code.DELETE_ERR,flag);
     }
 
     @PutMapping
-    public String update(@RequestBody BookVO book) {
+    public Result update(@RequestBody BookVO book) {
         System.out.println("book controller update ...");
-        bookService.update(book);
-        return "{'code':'001','stat':'update ok'}";
+        boolean flag = bookService.update(book);
+        return new Result(flag ? Code.UPDATE_OK:Code.UPDATE_ERR,flag);
     }
 
     @GetMapping
@@ -43,8 +43,11 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public BookVO findById(@PathVariable Integer id) {
+    public Result findById(@PathVariable Integer id) {
+        BookVO book = bookService.findById(id);
         System.out.println("book controller findById ...");
-        return bookService.findById(id);
+        String code = book != null ? Code.GET_OK : Code.GET_ERR;
+        String msg = book != null ? "" : "검색된 데이터가 없습니다！";
+        return new Result(code,book,msg);
     }
 }

@@ -1,5 +1,6 @@
 package com.withx.config;
 
+import com.withx.advice.ExceptionAdvice;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -12,9 +13,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc
-@Import({swaggerConfig.class})
+@Import({swaggerConfig.class,ResourceConfig.class, ExceptionAdvice.class})
 @ComponentScan({"com.withx.controller"})
-@PropertySource("classpath:swagger.properties")
+@PropertySource("classpath:config/swagger.properties")
 public class ServeletConfig implements WebMvcConfigurer {
 
     @Override

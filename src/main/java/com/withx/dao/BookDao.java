@@ -11,11 +11,11 @@ import java.util.List;
 public interface BookDao {
 
     @Insert("insert into tb_book(name,price)values(#{name},#{price})")
-    void save(BookVO book);
+    public int save(BookVO book);
     @Delete("delete from tb_book where id = #{id} ")
-    void delete(Integer id);
+    public int delete(Integer id);
     @Update("update tb_book set name = #{name} , price = #{price} where id = #{id} ")
-    void update(BookVO book);
+    public int update(BookVO book);
     @Select("select * from tb_book")
     List<BookVO> findAll();
     @Select("select * from tb_book where id = #{id} ")
