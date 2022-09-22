@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @ComponentScan({"com.withx.service"})
-@Import({JdbcConfig.class,MybatisConfig.class})
+@Import({JdbcConfig.class,MybatisConfig.class, SecurityInit.class, SecurityConfig.class})
 @PropertySource("classpath:config/root.properties")
 @EnableTransactionManagement
 public class RootConfig {
