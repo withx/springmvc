@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @ComponentScan({"com.withx.service"})
 @Import({JdbcConfig.class,MybatisConfig.class})
-@PropertySource("classpath:config/jdbc.properties")
+@PropertySource("classpath:config/root.properties")
 @EnableTransactionManagement
 public class RootConfig {
 }

@@ -14,7 +14,7 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 @Import({swaggerConfig.class, ExceptionAdvice.class})
 @ComponentScan({"com.withx.controller","com.withx.interceptor"})
-@PropertySource("classpath:config/swagger.properties")
+@PropertySource("classpath:config/servlet.properties")
 public class ServeletConfig implements WebMvcConfigurer {
 
     @Override
@@ -25,6 +25,7 @@ public class ServeletConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/pages/**").addResourceLocations("/pages/");
         registry.addResourceHandler("/js/**").addResourceLocations("/js/");
         registry.addResourceHandler("/css/**").addResourceLocations("/css/");
+        registry.addResourceHandler("/img/**").addResourceLocations("/img/");
         registry.addResourceHandler("/plugins/**").addResourceLocations("/plugins/");
     }
 
@@ -36,14 +37,11 @@ public class ServeletConfig implements WebMvcConfigurer {
         bean.setSuffix(".jsp");
         registry.viewResolver(bean);
     }
-
-
-
     @Autowired
     private BookIntercepter bookIntercepter;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(bookIntercepter).addPathPatterns("/books");
     }
-
 }
