@@ -29,11 +29,13 @@ public class JdbcConfig {
     /*Druid DataSource*/
     @Bean
     public DataSource dataSource() {
-        DruidDataSource ds = new DruidDataSource();
-        ds.setDriverClassName(driver);
-        ds.setUrl(url);
-        ds.setUsername(username);
-        ds.setPassword(password);
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setDriverClassName(driver);
+        hikariConfig.setJdbcUrl(url);
+        hikariConfig.setUsername(username);
+        hikariConfig.setPassword(password);
+
+        HikariDataSource ds = new HikariDataSource(hikariConfig);
 
         return ds;
     }
@@ -46,7 +48,22 @@ public class JdbcConfig {
         ds.setUrl(url);
         ds.setUsername(username);
         ds.setPassword(password);
+        ds.setInitialSize(1);
+        ds.setMinIdle(1);
+        ds.setMaxActive(5);
+        ds.setTestWhileIdle(true);
+        ds.setValidationQuery("select 1");
+        /*
+        ds.setMaxWait();
+        ds.setTimeBetweenEvictionRunsMillis();
+        ds.setMinEvictableIdleTimeMillis();
 
+
+        ds.setTestOnBorrow();
+        ds.setTestOnReturn();
+        ds.setPoolPreparedStatements();
+        ds.setMaxPoolPreparedStatementPerConnectionSize();
+        */
         return ds;
     }
 

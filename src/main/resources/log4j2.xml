@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG">
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <File name="file" fileName="logs/file.log">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+        </File>
+        <RollingFile name="rollfile" fileName="logs/rollfile.log"
+                     filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+        </RollingFile>
+        <SMTP name="mail"                    subject="Log From Log4j"
+              from="log4j@withx.net"         to="jiangtao@tom.com"
+              smtpProtocol="smtp"            smtpHost="smtp.ym.163.com"
+              smtpUsername="log4j@withx.net" smtpPassword="pdfQLev9wF="
+              smtpDebug="true"               smtpPort="25"
+              bufferSize="512">
+              <Filters><ThresholdFilter level="ERROR"/></Filters>
+        </SMTP>
+        <JDBC name="jdbc" tableName="EVENT_LOGS">
+            <!--If Using then JNDI DateSource->
+            <!-- <DataSource jndiName="java:/comp/env/jdbc/LoggingDataSource" /> -->
+            <ConnectionFactory class="com.withx.log.LogsStoreConnectionFactory" method="getConnection" />
+            <Column name="ID" pattern="%u" />
+            <Column name="DATE_TIME" isEventTimestamp="true" />
+            <Column name="CLASS" pattern="%logger" />
+            <Column name="LEVEL" pattern="%level" />
+            <Column name="MESSAGE" pattern="%message" />
+            <Column name="exception" pattern="%ex{full}" />
+        </JDBC>
+    </Appenders>
+    <Loggers>
+        <logger name="org.springframework.web"      level="warn"/>
+        <logger name="org.springframework.core"     level="error"/>
+        <logger name="org.springframework.beans"    level="warn"/>
+        <logger name="org.springframework.context"  level="warn"/>
+        <logger name="org.springframework.security" level="warn"/>
+        <logger name="java.sql" level="off" additivity="false"/>
+
+        <logger name="jdbc.resultsettable" additivity="false" level="debug">
+            <appender-ref ref="console" />
+        </logger>
+        <logger name="jdbc.sqltiming" additivity="false" level="debug">
+            <appender-ref ref="console" />
+            <appender-ref ref="mail" />
+        </logger>
+        <logger name="jdbc.connection" additivity="false" level="off">
+            <appender-ref ref="console" />
+        </logger>
+        <logger name="jdbc.audit" additivity="false" level="off">
+            <appender-ref ref="console" />
+        </logger>
+        <logger name="jdbc.resultset" additivity="false" level="off">
+            <appender-ref ref="console" />
+        </logger>
+        <logger name="jdbc.sqlonly" additivity="false" level="off">
+            <appender-ref ref="console" />
+        </logger>
+
+        <Root level="ERROR">
+            <AppenderRef ref="console"/>
+        </Root>
+    </Loggers>
+</Configuration>
+
+<!--
+create table EVENT_LOGS (ID varchar(50) primary key,DATE_TIME timestamp,CLASS varchar(100),
+   LEVEL varchar(10),MESSAGE TEXT,EXCEPTION TEXT);
+-->

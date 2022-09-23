@@ -1,13 +1,16 @@
 package com.withx.config;
 
+import org.apache.logging.log4j.util.PropertiesUtil;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;
+import java.util.Properties;
 
 @Configuration
 public class WebConfig  extends AbstractAnnotationConfigDispatcherServletInitializer {
+
     protected Class<?>[] getRootConfigClasses() {
         return new Class[]{RootConfig.class};
     }

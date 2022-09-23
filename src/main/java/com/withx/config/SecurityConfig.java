@@ -14,8 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
-
     @Bean
     UserDetailsService userDetailsService() {
         InMemoryUserDetailsManager users = new InMemoryUserDetailsManager();
@@ -23,7 +21,6 @@ public class SecurityConfig {
         users.createUser(User.withUsername("root").password("{noop}123").roles("admin").build());
         return users;
     }
-
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return new WebSecurityCustomizer() {
